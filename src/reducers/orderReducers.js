@@ -8,7 +8,7 @@ import {
     ORDER_DETAILS_SUCCESS,
 } from '../constants/orderConstants';
 
-export const orderCreateReducer = (state = { loading: true }, action) => {
+export const orderCreateReducer = (state = { }, action) => {
     switch (action.type) {
         case ORDER_CREATE_REQUEST:
             return { loading: true };
