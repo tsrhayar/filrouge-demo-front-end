@@ -1,0 +1,118 @@
+.product-link {
+    width: 250px;
+    text-decoration: none !important;
+    margin: 3px;
+    height: 340px;
+
+    .product-card {
+        transition-duration: 0.3s;
+        background-color: white;
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+
+        .product-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            height: 70%;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .product-info {
+            padding: 0 0 0 8px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            height: 30%;
+
+            .product-name {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .product-link {
+        width: 200px !important;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    .product-link {
+        width: calc(33% - 6px) !important;
+        height: 340px !important;
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    .product-link {
+        width: 180px !important;
+    }
+}
+
+@media only screen and (max-width: 530px) {
+    .product-link {
+        width: calc(50% - 6px) !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .product-link {
+        width: calc(50%) !important;
+
+        .product-card .product-info .product-price {
+            font-size: 20px !important;
+        }
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+    .product-link {
+        width: calc(50% - 20px) !important;
+        height: 240px !important;
+    }
+
+    .product-link .product-card .product-info .product-name {
+        font-size: 15px !important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .product-link {
+        width: calc(50% - 20px) !important;
+        height: 280px !important;
+    }
+
+    .product-link .product-card .product-image {
+        height: 55%;
+    }
+
+    .product-link .product-card .product-info {
+        height: 45%;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .product-link {
+        height: 260px !important;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .product-link {
+        height: 240px !important;
+    }
+}

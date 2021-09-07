@@ -23,27 +23,37 @@ const CartScreen = (props) => {
   const checkoutHandler = () => {
     props.history.push("/signin?redirect=shipping");
   };
+
   return (
-    <div className="row top">
-      <div className="col-2">
-        <h1>Shopping Cart</h1>
-        {cartItems.length === 0 ? (
-          <MessageBox>
-            Cart is empty! <Link to="/">Go Shopping</Link>
-          </MessageBox>
-        ) : (
-          <ul>
-            {cartItems.map((item) => (
-              <li key={item.product}>
-                <div className="row">
-                  <div>
-                    <img className="small" src={item.image} alt={item.name} />
+    <div className="cart-page-container">
+      {cartItems.length === 0 ? (
+        <MessageBox>
+          Cart is empty! <Link to="/">Go Shopping</Link>
+        </MessageBox>
+      ) : (
+        <>
+          <div className="cart-image-info-container ">
+            {cartItems.map((item,index) =>
+              <div className="cart-image-info pb-2" key={index}>
+                <div className="part-1">
+                  <div className="cart-product-image">
+                    <Link to={`/product/${item.product}`} >
+                      <img src={item.image} alt={item.name} />
+                    </Link>
                   </div>
-                  <div className="min-30">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  <div className="cart-product-name">
+                    <Link
+                      className="cart-product-name text-dark text-decoration-none"
+                      to={`/product/${item.product}`}
+                    >
+                      {item.name}
+                    </Link>
                   </div>
-                  <div>
+                </div>
+                <div className="part-2">
+                  <div className="cart-product-qty">
                     <input
+                      className="w-75"
                       type="number"
                       defaultValue={item.qty}
                       min="1"
@@ -51,42 +61,29 @@ const CartScreen = (props) => {
                       onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
                     />
                   </div>
-                  <div>$ {item.price}</div>
-                  <div>
+                  <div className="cart-product-price">{item.price}.00 Dh</div>
+                  <div className="cart-delete-btn">
                     <button
-                      type="button"
+                      className="btn btn-danger" type="button"
                       onClick={() => {
                         removeFromCartHandler(item.product);
                       }}
-                    >
-                      Delete
-                    </button>
+                    >Delete</button>
                   </div>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <div className="col-1">
-        <div className="card card-body">
-          <ul>
-            <li>
-              <h2>SubTotal ({cartItems.reduce((a, c) => a + c.qty, 0)})</h2>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={checkoutHandler}
-                className="primary block"
-                disabled={cartItems.length === 0}
-              >
-                Proceed to checkout
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
+              </div>
+            )}
+          </div>
+          <div className="cart-checkout">
+            <h4>SubTotal ({cartItems.reduce((a, c) => a + c.qty, 0)})</h4>
+            <button className="btn btn-warning" type="button"
+              onClick={checkoutHandler}
+              disabled={cartItems.length === 0} >
+              Poccedd to checkout
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

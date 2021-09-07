@@ -1,22 +1,26 @@
 import React from "react";
-import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
 const Product = (props) => {
+
   const { product } = props;
   return (
-    <div className="card" key={product._id}>
-      <Link to={`/product/${product._id}`}>
-        <img className="medium" src={product.image} alt={product.name} />
-      </Link>
-      <div className="card-body">
-        <Link to={`/product/${product._id}`}>
-          <h2>{product.name}</h2>
-        </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
-        <div className="price">$ {product.price}</div>
+
+
+
+    <Link className="text-dark product-link" to={`/product/${product._id}`}>
+
+      <div className="product-card rounded m-1 shadow-sm">
+        <div className="product-image">
+          <img src={product.image} alt={product.name} />
+        </div>
+        <div className="product-info">
+          <h5 className="product-name">{product.name}</h5>
+          <h3 className="product-price">{product.price}.00 DH</h3>
+        </div>
       </div>
-    </div>
+    </Link>
+
   );
 };
 
