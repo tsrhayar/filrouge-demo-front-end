@@ -17,6 +17,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -59,16 +60,29 @@ function App() {
                       <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {userInfo.name}
                       </Link>
-                      <div className="dropdown-menu" aria-labelledby="navbarDropdown"  style={{ left: "auto", right: 0 }}>
+                      <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{ left: "auto", right: 0 }}>
                         <Link className="dropdown-item" to="/profile">User Profile</Link>
                         <Link className="dropdown-item" to="/orderhistory">Order History</Link>
-                        <Link className="dropdown-item" to="#" onClick={signoutHandler}>Déconnexion</Link>
+                        <Link className="dropdown-item" to="/" onClick={signoutHandler}>Déconnexion</Link>
                       </div>
                     </li>
                   ) : (
                     <Link className="nav-item nav-link mx-1" to="/signin">Connectez</Link>
                   )
                 }
+                {userInfo && userInfo.isAdmin && (
+                  <li className="nav-item dropdown">
+                    <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Admin
+                    </Link>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{ left: "auto", right: 0 }}>
+                      <Link className="dropdown-item" to="/dashboard">Dashboard</Link>
+                      <Link className="dropdown-item" to="/productlist">Products</Link>
+                      <Link className="dropdown-item" to="/orderlist">Orders</Link>
+                      <Link className="dropdown-item" to="/userlist">Users </Link>
+                    </div>
+                  </li>
+                )}
 
               </div>
             </div>
@@ -84,12 +98,14 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-          <Route path="/profile" component={ProfileScreen}></Route>
+
+          <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
 
         <footer className="bg-light text-dark text-center">
-footer        </footer>
+          footer
+        </footer>
       </div>
     </BrowserRouter>
   );
