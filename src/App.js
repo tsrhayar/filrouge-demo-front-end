@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 import "./style.css"
 // import "./index.css"
-
+import AdminRoute from './components/AdminRoute';
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import SigninScreen from "./screens/SigninScreen";
+import ProductEditScreen from './screens/ProductEditScreen';
 import RegistreScreen from "./screens/RegistreScreen";
 import { signout } from "./actions/userActions";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
@@ -18,7 +19,7 @@ import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";
-
+import ProductListScreen from './screens/ProductListScreen';
 function App() {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -90,7 +91,9 @@ function App() {
         </header>
         <main className="container " >
           <Route path="/cart/:id?" component={CartScreen} exact></Route>
-          <Route path="/product/:id?" component={ProductScreen}></Route>
+          <Route path="/product/:id" component={ProductScreen} exact></Route>
+          <Route
+            path="/product/:id/edit" component={ProductEditScreen} exact></Route>
           <Route path="/registre" component={RegistreScreen}></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
@@ -100,6 +103,7 @@ function App() {
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
 
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
+          <AdminRoute path="/productlist" component={ProductListScreen} ></AdminRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
 
