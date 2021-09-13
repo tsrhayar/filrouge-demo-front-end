@@ -16,6 +16,7 @@ import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -55,10 +56,11 @@ function App() {
                   userInfo ? (
 
                     <li className="nav-item dropdown">
-                      <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {userInfo.name}
                       </Link>
-                      <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{ left: "auto", right: 0 }}>
+                      <div className="dropdown-menu" aria-labelledby="navbarDropdown"  style={{ left: "auto", right: 0 }}>
+                        <Link className="dropdown-item" to="/profile">User Profile</Link>
                         <Link className="dropdown-item" to="/orderhistory">Order History</Link>
                         <Link className="dropdown-item" to="#" onClick={signoutHandler}>Déconnexion</Link>
                       </div>
@@ -82,6 +84,7 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route path="/profile" component={ProfileScreen}></Route>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
 
