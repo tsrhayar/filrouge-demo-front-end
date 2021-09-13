@@ -28,7 +28,7 @@ const ProductScreen = (props) => {
             <img src={product.image} alt={product.name} />
           </div>
           <div className="col-sm-7 product-page-info d-flex flex-column justify-content-center">
-            <h2 className="h1">{product.price}.00 Dh</h2>
+            <h2 className="h1">{product.price}.00 $</h2>
             <h1 className="h3">{product.name}</h1>
             <Rating rating={product.rating} numReviews={product.numReviews} />
             <p className="text-muted">

@@ -61,7 +61,7 @@ const CartScreen = (props) => {
                       onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
                     />
                   </div>
-                  <div className="cart-product-price">{item.price}.00 Dh</div>
+                  <div className="cart-product-price">{item.price}.00 $</div>
                   <div className="cart-delete-btn">
                     <button
                       className="btn btn-danger" type="button"
