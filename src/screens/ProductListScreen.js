@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct, listProducts } from '../actions/productActions';
+import {
+    createProduct,
+    deleteProduct,
+    listProducts,
+} from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
+import {
+    PRODUCT_CREATE_RESET,
+    PRODUCT_DELETE_RESET,
+} from '../constants/productConstants';
 
 export default function ProductListScreen(props) {
     const productList = useSelector((state) => state.productList);
@@ -15,16 +22,29 @@ export default function ProductListScreen(props) {
         success: successCreate,
         product: createdProduct,
     } = productCreate;
+
+    const productDelete = useSelector((state) => state.productDelete);
+    const {
+        loading: loadingDelete,
+        error: errorDelete,
+        success: successDelete,
+    } = productDelete;
+
     const dispatch = useDispatch();
     useEffect(() => {
         if (successCreate) {
             dispatch({ type: PRODUCT_CREATE_RESET });
             props.history.push(`/product/${createdProduct._id}/edit`);
         }
+        if (successDelete) {
+            dispatch({ type: PRODUCT_DELETE_RESET });
+        }
         dispatch(listProducts());
-    }, [createdProduct, dispatch, props.history, successCreate]);
-    const deleteHandler = () => {
-        /// TODO: dispatch delete action
+    }, [createdProduct, dispatch, props.history, successCreate, successDelete]);
+    const deleteHandler = (product) => {
+        if (window.confirm('Are you sure to delete?')) {
+            dispatch(deleteProduct(product._id));
+        }
     };
     const createHandler = () => {
         dispatch(createProduct());
@@ -37,6 +57,8 @@ export default function ProductListScreen(props) {
                     Create Product
                 </button>
             </div>
+            {loadingDelete && <LoadingBox></LoadingBox>}
+            {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
             {loadingCreate && <LoadingBox></LoadingBox>}
             {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
             {loading ? (
@@ -49,6 +71,7 @@ export default function ProductListScreen(props) {
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>IMAGE</th>
                                 <th>NAME</th>
                                 <th>PRICE</th>
                                 <th>CATEGORY</th>
@@ -57,8 +80,10 @@ export default function ProductListScreen(props) {
                         </thead>
                         <tbody>
                             {products.map((product) => (
+
                                 <tr key={product._id}>
                                     <td>{product._id}</td>
+                                    <td><img style={{ height: "70px" }} src={product.image} alt={product.name} /></td>
                                     <td>{product.name}</td>
                                     <td>{product.price}</td>
                                     <td>{product.category}</td>
@@ -66,7 +91,7 @@ export default function ProductListScreen(props) {
                                         <button
                                             type="button"
                                             className="btn btn-info mr-1 mb-1"
-                                            style={{width:"100px"}}
+                                            style={{ width: "100px" }}
                                             onClick={() =>
                                                 props.history.push(`/product/${product._id}/edit`)
                                             }
@@ -76,7 +101,7 @@ export default function ProductListScreen(props) {
                                         <button
                                             type="button"
                                             className="btn btn-danger mb-1"
-                                            style={{width:"100px"}}
+                                            style={{ width: "100px" }}
                                             onClick={() => deleteHandler(product)}
                                         >
                                             Delete
